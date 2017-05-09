@@ -16,6 +16,7 @@ SVG based Pong game.
 - [ ] Bouncing off paddles/walls
 - [ ] Scoring
 - [ ] UI
+- [ ] Sound
 - [ ] Multiplayer
 
 ## Prerequisites

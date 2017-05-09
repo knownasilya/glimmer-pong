@@ -17,14 +17,15 @@ export default class PongField extends Component {
   opponentMovement: Direction;
 
   didInsertElement() {
-    this.element.addEventListener('keydown', (e) => this.keyDown(e));
-    this.element.addEventListener('keyup', (e) => this.keyUp(e));
-
+    let [body] = document.getElementsByTagName('body');
     let ballAngle = this.calculateBallAngle();
     let ballVector = this.calculateBallVector(ballAngle);
+
+    body.addEventListener('keydown', (e) => this.keyDown(e));
+    body.addEventListener('keyup', (e) => this.keyUp(e));
+
     this.ballVector = ballVector;
     this.ballAngle = ballAngle;
-
     this.update();
   }
 

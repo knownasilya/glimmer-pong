@@ -29,10 +29,16 @@ export default class PongField extends Component {
     this.update();
   }
 
-  update(timestamp) {
+  update(timestamp?) {
     this.moveUser('player');
     this.moveUser('opponent');
-    this.moveBall(timestamp);
+
+    if (!this.ballWithinField()) {
+      this.resetBall();
+    } else {
+      this.moveBall(timestamp);
+    }
+
     window.requestAnimationFrame((timestamp) => this.update(timestamp));
   }
 
@@ -63,6 +69,12 @@ export default class PongField extends Component {
     }
   }
 
+  ballWithinField() {
+    let { x, y } = this.ballPosition;
+    
+    return x > -5 && x < 455 && y > -5 && y < 405;
+  }
+
   calculateBallAngle() {
     let angle = Math.random() * Math.PI * 2;
     return angle;
@@ -73,6 +85,14 @@ export default class PongField extends Component {
       x: Math.cos(angle) * 5,
       y: Math.sin(angle) * 5
     };
+  }
+
+  resetBall() {
+    this.ballPosition = {
+      x: 200,
+      y: 200
+    };
+    this.ballAngle = this.calculateBallAngle();
   }
 
   moveBall(timestamp) {

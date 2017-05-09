@@ -2,6 +2,22 @@
 
 SVG based Pong game.
 
+:construction: This is not playable yet, please come back soon.
+
+## Controls
+
+- `Player 1`: <kbd>w</kbd> and <kbd>s</kbd> keys for moving (left) paddle
+- `Player 2`: <kbd>▲</kbd> and <kbd>▼</kbd> keys for moving (right) paddle
+
+
+## TODO
+
+- [ ] Collision detection
+- [ ] Bouncing off paddles/walls
+- [ ] Scoring
+- [ ] UI
+- [ ] Multiplayer
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.

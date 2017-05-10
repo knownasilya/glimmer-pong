@@ -1,31 +1,28 @@
 import Component, { tracked } from '@glimmer/component';
 
 type Direction = 'up' | 'down' | '';
-interface Position {
+interface Vector {
   x: number;
   y: number;
 }
 
 export default class PongField extends Component {
-  @tracked ballPosition: Position = { x: 200, y: 200 };
-  @tracked playerPosition: Position = { x: 400, y: 200 };
-  @tracked opponentPosition: Position = { x: 20, y: 200 };
+  @tracked ballPosition: Vector = { x: 200, y: 200 };
+  @tracked playerPosition: Vector = { x: 400, y: 200 };
+  @tracked opponentPosition: Vector = { x: 20, y: 200 };
 
   ballAngle: number;
-  ballVector: Position;
+  ballVelocity: Vector;
   playerMovement: Direction;
   opponentMovement: Direction;
 
   didInsertElement() {
     let [body] = document.getElementsByTagName('body');
-    let ballAngle = this.calculateBallAngle();
-    let ballVector = this.calculateBallVector(ballAngle);
 
     body.addEventListener('keydown', (e) => this.keyDown(e));
     body.addEventListener('keyup', (e) => this.keyUp(e));
 
-    this.ballVector = ballVector;
-    this.ballAngle = ballAngle;
+    this.resetBall();
     this.update();
   }
 
@@ -106,7 +103,7 @@ export default class PongField extends Component {
     return angle;
   }
 
-  calculateBallVector(angle: number) {
+  calculateBallVelocity(angle: number) {
     return {
       x: Math.cos(angle) * 2,
       y: Math.sin(angle) * 2
@@ -119,18 +116,18 @@ export default class PongField extends Component {
       y: 200
     };
     this.ballAngle = this.calculateBallAngle();
-    this.ballVector = this.calculateBallVector(this.ballAngle);
+    this.ballVelocity = this.calculateBallVelocity(this.ballAngle);
   }
 
   changeBallVelocity({x=1, y=1}) {
-    this.ballVector = {
-      x: this.ballVector.x * x,
-      y: this.ballVector.y * y
+    this.ballVelocity = {
+      x: this.ballVelocity.x * x,
+      y: this.ballVelocity.y * y
     };
   }
 
   moveBall(timestamp) {
-    let speed = this.ballVector;
+    let speed = this.ballVelocity;
 
     this.ballPosition = {
       x: this.ballPosition.x + speed.x,

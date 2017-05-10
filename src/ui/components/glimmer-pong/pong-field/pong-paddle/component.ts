@@ -4,8 +4,18 @@ export default class PongPaddle extends Component {
   @tracked position;
 
   didInsertElement() {
+    let self = this;
+
     this.args.register({
-      test: 'test'
+      get bbox() {
+        return self.bbox;
+      }
     });
+  }
+
+  get bbox() {
+    if (this.element) {
+      return this.element.getBoundingClientRect();
+    }
   }
 };

@@ -2,7 +2,10 @@
   baseProfile="full"
   width="420" height="400"
   xmlns="http://www.w3.org/2000/svg">
-  <pong-ball id='primary-ball' @position={{ballPosition}} @register={{action registerTypeApi 'ball'}} />
-  <pong-paddle id='opponent-paddle' @position={{opponentPosition}} @register={{action registerTypeApi 'leftPaddle'}} />
-  <pong-paddle id='player-paddle' @position={{playerPosition}} @register={{action registerTypeApi 'rightPaddle'}} />
+  <pong-ball id='primary-ball'
+    @register={{action registerTypeApi 'ball'}} />
+  <pong-paddle id='opponent-paddle' @position={{opponentPosition}}
+    @register={{action registerTypeApi 'leftPaddle'}} />
+  <pong-paddle id='player-paddle' @position={{playerPosition}}
+    @register={{action registerTypeApi 'rightPaddle'}} />
 </svg>

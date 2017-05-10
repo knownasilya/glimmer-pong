@@ -12,8 +12,8 @@ SVG based Pong game.
 
 ## TODO
 
-- [ ] Collision detection
-- [ ] Bouncing off paddles/walls
+- [x] Collision detection
+- [x] Bouncing off paddles/walls
 - [ ] Scoring
 - [ ] UI
 - [ ] Sound

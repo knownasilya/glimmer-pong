@@ -33,8 +33,15 @@ export default class PongField extends Component {
     this.moveUser('player');
     this.moveUser('opponent');
 
-    if (!this.ballWithinField()) {
+    let touchingSide = this.ballTouchingWall()
+    
+    if (touchingSide === 'left' || touchingSide === 'right') {
       this.resetBall();
+    } else if (touchingSide === 'top' || touchingSide === 'bottom') {
+      this.changeBallVelocity({
+        y: -1
+      });
+      this.moveBall(timestamp);
     } else {
       this.moveBall(timestamp);
     }
@@ -69,10 +76,20 @@ export default class PongField extends Component {
     }
   }
 
-  ballWithinField() {
+  ballTouchingWall() {
     let { x, y } = this.ballPosition;
     
-    return x > -5 && x < 455 && y > -5 && y < 405;
+    if (x < -5) {
+      return 'left';
+    } else if (x > 455) {
+      return 'right';
+    } else if (y < -5) {
+      return 'top';
+    } else if (y > 405) {
+      return 'bottom';
+    } else {
+      return '';
+    }
   }
 
   calculateBallAngle() {
@@ -82,8 +99,8 @@ export default class PongField extends Component {
 
   calculateBallVector(angle: number) {
     return {
-      x: Math.cos(angle) * 5,
-      y: Math.sin(angle) * 5
+      x: Math.cos(angle) * 2,
+      y: Math.sin(angle) * 2
     };
   }
 
@@ -93,12 +110,22 @@ export default class PongField extends Component {
       y: 200
     };
     this.ballAngle = this.calculateBallAngle();
+    this.ballVector = this.calculateBallVector(this.ballAngle);
+  }
+
+  changeBallVelocity({x=1, y=1}) {
+    this.ballVector = {
+      x: this.ballVector.x * x,
+      y: this.ballVector.y * y
+    };
   }
 
   moveBall(timestamp) {
+    let speed = this.ballVector;
+
     this.ballPosition = {
-      x: this.ballPosition.x + (2 * Math.cos(this.ballAngle)),
-      y: this.ballPosition.y + (2 * Math.sin(this.ballAngle)),
+      x: this.ballPosition.x + speed.x,
+      y: this.ballPosition.y + speed.y
     };
   }
 

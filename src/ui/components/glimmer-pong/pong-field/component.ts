@@ -15,19 +15,29 @@ export default class PongField extends Component {
   ballVelocity: Vector;
   playerMovement: Direction;
   opponentMovement: Direction;
+  leftPaddle: HTMLElement;
+  rightPaddle: HTMLElement;
+  ball: HTMLElement;
 
   didInsertElement() {
     let [body] = document.getElementsByTagName('body');
+    let leftPaddle = this.element.getElementById('opponent-paddle');
+    let rightPaddle = this.element.getElementById('player-paddle');
+    let ball = this.element.getElementById('primary-ball');
 
     body.addEventListener('keydown', (e) => this.keyDown(e));
     body.addEventListener('keyup', (e) => this.keyUp(e));
+
+    this.leftPaddle = leftPaddle;
+    this.rightPaddle = rightPaddle;
+    this.ball = ball;
 
     this.resetBall();
     this.update();
   }
 
   registerTypeApi(type: string, api: object) {
-    this[type] = api;
+    //this[type] = api;
   }
 
   update(timestamp?) {
@@ -41,6 +51,11 @@ export default class PongField extends Component {
     } else if (touchingSide === 'top' || touchingSide === 'bottom') {
       this.changeBallVelocity({
         y: -1
+      });
+      this.moveBall(timestamp);
+    } else if (intersectRect(this.ball, this.leftPaddle) || intersectRect(this.ball, this.rightPaddle)) {
+      this.changeBallVelocity({
+        x: -1
       });
       this.moveBall(timestamp);
     } else {
@@ -183,3 +198,15 @@ export default class PongField extends Component {
     }
   }
 };
+
+
+function intersectRect(r1, r2) {
+  var r1 = r1.getBoundingClientRect();    //BOUNDING BOX OF THE FIRST OBJECT
+  var r2 = r2.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT
+ 
+    //CHECK IF THE TWO BOUNDING BOXES OVERLAP
+  return !(r2.left > r1.right || 
+           r2.right < r1.left || 
+           r2.top > r1.bottom ||
+           r2.bottom < r1.top);
+}

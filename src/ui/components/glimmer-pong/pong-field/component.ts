@@ -29,12 +29,16 @@ export default class PongField extends Component {
     this.update();
   }
 
+  registerTypeApi(type: string, api: object) {
+    this[type] = api;
+  }
+
   update(timestamp?) {
     this.moveUser('player');
     this.moveUser('opponent');
 
-    let touchingSide = this.ballTouchingWall()
-    
+    let touchingSide = this.ballTouchingWall();
+
     if (touchingSide === 'left' || touchingSide === 'right') {
       this.resetBall();
     } else if (touchingSide === 'top' || touchingSide === 'bottom') {
@@ -93,7 +97,12 @@ export default class PongField extends Component {
   }
 
   calculateBallAngle() {
-    let angle = Math.random() * Math.PI * 2;
+    let numSections = 8;
+    let sections = [3, 4, 7, 8, 9];
+    let sectionIndex = Math.floor(Math.random() * 4);
+    let section = sections[sectionIndex];
+    let angle = (Math.random() + section) * Math.PI * 2 / numSections;
+
     return angle;
   }
 

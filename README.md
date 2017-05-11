@@ -1,8 +1,6 @@
 # glimmer-pong
 
-SVG based Pong game.
-
-:construction: This is not playable yet, please come back soon.
+SVG based Pong game :video_game: :space_invader: :tennis:
 
 ## Controls
 

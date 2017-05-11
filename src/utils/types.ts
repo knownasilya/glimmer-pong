@@ -4,6 +4,7 @@ export interface Vector {
 }
 
 export interface BallApi {
+  setup: Function;
   reset: Function;
   move: Function;
   changeVelocity: Function;
@@ -12,5 +13,9 @@ export interface BallApi {
 }
 
 export interface PaddleApi {
-  bbox: ClientRect
+  setup: Function;
+  bbox: ClientRect;
+  position: Vector;
+  moveUp: Function;
+  moveDown: Function;
 }

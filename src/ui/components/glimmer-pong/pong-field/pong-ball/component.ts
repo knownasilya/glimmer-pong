@@ -7,7 +7,9 @@ interface Vector {
 
 export default class PongBall extends Component {
   angle: number;
+  timer: number = 5;
   velocity: Vector;
+  defaultPosition: Vector;
   @tracked position: Vector = { x: 200, y: 200 };
 
   didInsertElement() {
@@ -22,8 +24,16 @@ export default class PongBall extends Component {
       },
       changeVelocity: this.changeVelocity.bind(this),
       reset: this.reset.bind(this),
-      move: this.move.bind(this)
+      move: this.move.bind(this),
+      setup: this.setup.bind(this)
     });
+  }
+
+  setup({ x, y }) {
+    this.defaultPosition = {
+      x, y
+    };
+    this.reset();
   }
 
   get bbox() {
@@ -33,6 +43,11 @@ export default class PongBall extends Component {
   }
 
   move() {
+    if (this.timer !== 0) {
+      this.timer -= 1;
+      return;
+    }
+    
     let speed = this.velocity;
 
     this.position = {
@@ -50,11 +65,12 @@ export default class PongBall extends Component {
 
   reset() {
     this.position = {
-      x: 200,
-      y: 200
+      x: this.defaultPosition.x,
+      y: this.defaultPosition.y
     };
     this.angle = this.calculateAngle();
     this.velocity = this.calculateVelocity(this.angle);
+    this.timer = 5;
   }
 
   calculateAngle() {

@@ -1,15 +1,11 @@
 import Component, { tracked } from '@glimmer/component';
-import { BallApi, PaddleApi } from '../../../../utils/types';
+import { Vector, BallApi, PaddleApi } from '../../../../utils/types';
 
 type Direction = 'up' | 'down' | '';
-interface Vector {
-  x: number;
-  y: number;
-}
 
 export default class PongField extends Component {
-  @tracked playerPosition: Vector = { x: 400, y: 200 };
-  @tracked opponentPosition: Vector = { x: 20, y: 200 };
+  @tracked playerPosition: Vector = { x: 390, y: 200 };
+  @tracked opponentPosition: Vector = { x: 5, y: 200 };
 
   playerMovement: Direction;
   opponentMovement: Direction;
@@ -23,7 +19,10 @@ export default class PongField extends Component {
     body.addEventListener('keydown', (e) => this.keyDown(e));
     body.addEventListener('keyup', (e) => this.keyUp(e));
 
-    this.ball.reset();
+    this.ball.setup({
+      x: 200,
+      y: 200
+    });
     this.update();
   }
 
@@ -65,17 +64,17 @@ export default class PongField extends Component {
         if (position.y > 5) {
           this[`${type}Position`] = {
             x: position.x,
-            y: position.y - 2
+            y: position.y - 4
           };
         }
         break;
       }
 
       case 'down': {
-        if (position.y < 380) {
+        if (position.y < 370) {
           this[`${type}Position`] = {
             x: position.x,
-            y: position.y + 2
+            y: position.y + 4
           };
         }
         break;
@@ -86,13 +85,13 @@ export default class PongField extends Component {
   ballTouchingWall() {
     let { x, y } = this.ball.position;
     
-    if (x < -5) {
+    if (x < -6) {
       return 'left';
-    } else if (x > 455) {
+    } else if (x > 406) {
       return 'right';
-    } else if (y < -5) {
+    } else if (y < 0) {
       return 'top';
-    } else if (y > 405) {
+    } else if (y > 400) {
       return 'bottom';
     } else {
       return '';

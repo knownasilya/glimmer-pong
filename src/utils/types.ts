@@ -1,3 +1,5 @@
+export type Direction = 'up' | 'down' | '';
+
 export interface Vector {
   x: number;
   y: number;

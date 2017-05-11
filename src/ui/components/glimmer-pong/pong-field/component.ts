@@ -1,7 +1,5 @@
 import Component, { tracked } from '@glimmer/component';
-import { Vector, BallApi, PaddleApi } from '../../../../utils/types';
-
-type Direction = 'up' | 'down' | '';
+import { Vector, Direction, BallApi, PaddleApi } from '../../../../utils/types';
 
 export default class PongField extends Component {
   @tracked playerPosition: Vector = { x: 390, y: 192 };

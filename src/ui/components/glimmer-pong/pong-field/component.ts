@@ -4,8 +4,8 @@ import { Vector, BallApi, PaddleApi } from '../../../../utils/types';
 type Direction = 'up' | 'down' | '';
 
 export default class PongField extends Component {
-  @tracked playerPosition: Vector = { x: 390, y: 200 };
-  @tracked opponentPosition: Vector = { x: 5, y: 200 };
+  @tracked playerPosition: Vector = { x: 390, y: 192 };
+  @tracked opponentPosition: Vector = { x: 5, y: 192 };
 
   playerMovement: Direction;
   opponentMovement: Direction;

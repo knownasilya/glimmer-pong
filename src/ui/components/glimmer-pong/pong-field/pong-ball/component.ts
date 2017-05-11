@@ -6,6 +6,7 @@ interface Vector {
 }
 
 export default class PongBall extends Component {
+  element: HTMLElement;
   angle: number;
   timer: number = 5;
   velocity: Vector;
@@ -47,7 +48,7 @@ export default class PongBall extends Component {
       this.timer -= 1;
       return;
     }
-    
+
     let speed = this.velocity;
 
     this.position = {

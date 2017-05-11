@@ -5,8 +5,6 @@ export default class PongField extends Component {
   @tracked playerPosition: Vector = { x: 390, y: 192 };
   @tracked opponentPosition: Vector = { x: 5, y: 192 };
 
-  playerMovement: Direction;
-  opponentMovement: Direction;
   ball: BallApi;
   leftPaddle: PaddleApi;
   rightPaddle: PaddleApi;
@@ -21,6 +19,12 @@ export default class PongField extends Component {
       x: 200,
       y: 200
     });
+    this.leftPaddle.setup({
+      x: 5, y: 192
+    });
+    this.rightPaddle.setup({
+      x: 390, y: 192
+    });
     this.update();
   }
 
@@ -29,8 +33,8 @@ export default class PongField extends Component {
   }
 
   update(timestamp?) {
-    this.moveUser('player');
-    this.moveUser('opponent');
+    this.moveUser(this.leftPaddle);
+    this.moveUser(this.rightPaddle);
 
     let touchingSide = this.ballTouchingWall();
 
@@ -53,14 +57,14 @@ export default class PongField extends Component {
     window.requestAnimationFrame((timestamp) => this.update(timestamp));
   }
 
-  moveUser(type: 'player' | 'opponent') {
-    let movement = this[`${type}Movement`];
-    let position = this[`${type}Position`];
+  moveUser(paddle: PaddleApi) {
+    let movement = paddle.movement;
+    let position = paddle.position;
 
     switch(movement) {
       case 'up': {
         if (position.y > 5) {
-          this[`${type}Position`] = {
+          paddle.position = {
             x: position.x,
             y: position.y - 4
           };
@@ -70,7 +74,7 @@ export default class PongField extends Component {
 
       case 'down': {
         if (position.y < 370) {
-          this[`${type}Position`] = {
+          paddle.position = {
             x: position.x,
             y: position.y + 4
           };
@@ -102,7 +106,7 @@ export default class PongField extends Component {
       // down
       case 38:
       case 40: {
-        this.playerMovement = '';
+        this.rightPaddle.movement = '';
         return;
       }
 
@@ -110,7 +114,7 @@ export default class PongField extends Component {
       // down
       case 87:
       case 83: {
-        this.opponentMovement = '';
+        this.leftPaddle.movement = '';
         return;
       }
     }
@@ -120,25 +124,25 @@ export default class PongField extends Component {
     switch(e.keyCode) {
       // up
       case 38: {
-        this.playerMovement = 'up';
+        this.rightPaddle.movement = 'up';
         return;
       }
 
       // down
       case 40: {
-        this.playerMovement = 'down';
+        this.rightPaddle.movement = 'down';
         return;
       }
 
       // up
       case 87: {
-        this.opponentMovement = 'up';
+        this.leftPaddle.movement = 'up';
         return;
       }
 
       // down
       case 83: {
-        this.opponentMovement = 'down';
+        this.leftPaddle.movement = 'down';
         return;
       }
     }

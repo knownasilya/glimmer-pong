@@ -3,13 +3,30 @@ import { Vector, Direction } from '../../../../../utils/types';
 
 export default class PongPaddle extends Component {
   @tracked position: Vector;
+  element: HTMLElement;
+  movement: Direction;
 
   didInsertElement() {
     let self = this;
 
     this.args.register({
+      setup({ x, y }) {
+        self.position = { x, y };
+      },
       get bbox() {
         return self.bbox;
+      },
+      get movement() {
+        return self.movement;
+      },
+      set movement(value) {
+        self.movement = value;
+      },
+      get position() {
+        return self.position;
+      },
+      set position(value) {
+        self.position = value;
       }
     });
   }

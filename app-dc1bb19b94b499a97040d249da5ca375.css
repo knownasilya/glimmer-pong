@@ -16,7 +16,8 @@ svg {
   margin: auto;
   border-radius: 0;
   border: 0;
-  font-size: 1.2em; }
+  font-size: 1.2em;
+  cursor: pointer; }
 
 .player-score {
   font-family: 'Kelly Slab';

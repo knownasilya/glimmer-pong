@@ -8,6 +8,7 @@ export default class PongField extends Component {
   @tracked rightScore: number = 0;
   @tracked leftScore: number = 0;
   plopSound: HTMLAudioElement;
+  hitDelay: number = 0;
 
   args: {
     paused: boolean;
@@ -90,11 +91,14 @@ export default class PongField extends Component {
     let hitLeftPaddle = this.ball.hitPaddle(this.leftPaddle);
     let hitRightPaddle = this.ball.hitPaddle(this.rightPaddle);
 
-    if (hitLeftPaddle || hitRightPaddle) {
+    if (this.hitDelay === 0 && hitLeftPaddle || hitRightPaddle) {
+      this.hitDelay = 5;
       this.plopSound.play();
       this.ball.changeVelocity({
         x: -1
       });
+    } else if (this.hitDelay) {
+      this.hitDelay -= 1;
     }
 
     if (!skipBallMove) {

@@ -9,4 +9,6 @@
   <pong-paddle id='player-paddle'
     @register={{action registerTypeApi 'rightPaddle'}} />
   <line stroke-dasharray='10, 5' x1='200' y1='0' x2='200' y2='400' stroke-width='2' stroke='slategrey' />
+  <text id='left-score' class='player-score' x='165' y='30' fill='slategrey'>{{leftScore}}</text>
+  <text id='right-score' class='player-score' x='220' y='30' fill='slategrey'>{{rightScore}}</text>
 </svg>

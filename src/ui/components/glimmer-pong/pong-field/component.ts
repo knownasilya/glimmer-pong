@@ -5,6 +5,8 @@ export default class PongField extends Component {
   ball: BallApi;
   leftPaddle: PaddleApi;
   rightPaddle: PaddleApi;
+  @tracked rightScore: number = 0;
+  @tracked leftScore: number = 0;
 
   didInsertElement() {
     let [body] = document.getElementsByTagName('body');
@@ -49,14 +51,34 @@ export default class PongField extends Component {
     let touchingSide = this.ballTouchingWall();
     let skipBallMove = false;
 
-    if (touchingSide === 'left' || touchingSide === 'right') {
-      this.ball.reset();
-      skipBallMove = true;
-    } else if (touchingSide === 'top' || touchingSide === 'bottom') {
-      this.ball.changeVelocity({
-        y: -1
-      });
-    } else if (this.ball.hitPaddle(this.leftPaddle) || this.ball.hitPaddle(this.rightPaddle)) {
+    switch(touchingSide) {
+      case 'left': {
+        this.ball.reset();
+        this.rightScore += 1;
+        skipBallMove = true;
+        break;
+      }
+
+      case 'right': {
+        this.ball.reset();
+        this.leftScore += 1;
+        skipBallMove = true;
+        break;
+      }
+
+      case 'top':
+      case 'bottom': {
+        this.ball.changeVelocity({
+          y: -1
+        });
+        break;
+      }
+    }
+
+    let hitLeftPaddle = this.ball.hitPaddle(this.leftPaddle);
+    let hitRightPaddle = this.ball.hitPaddle(this.rightPaddle);
+
+    if (hitLeftPaddle || hitRightPaddle) {
       this.ball.changeVelocity({
         x: -1
       });

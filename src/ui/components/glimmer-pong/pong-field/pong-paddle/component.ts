@@ -1,10 +1,14 @@
 import Component, { tracked } from '@glimmer/component';
-import { Vector, Direction } from '../../../../../utils/types';
+import { Vector, Direction, Side } from '../../../../../utils/types';
 
 export default class PongPaddle extends Component {
   @tracked position: Vector;
   element: HTMLElement;
   movement: Direction;
+
+  args: {
+    side: Side;
+  }
 
   constructor() {
     super(...arguments);
@@ -16,6 +20,9 @@ export default class PongPaddle extends Component {
         self.position = { x, y };
       },
       attemptMovement: this.attemptMovement.bind(this),
+      get side() {
+        return self.args.side;
+      },
       get bbox() {
         return self.bbox;
       },

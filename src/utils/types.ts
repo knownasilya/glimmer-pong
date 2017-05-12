@@ -19,6 +19,7 @@ export interface BallApi {
 export interface PaddleApi {
   setup: Function;
   bbox: ClientRect;
+  side: Side;
   movement: Direction;
   position: Vector;
   attemptMovement: Function;

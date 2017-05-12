@@ -5,8 +5,8 @@
 
   <pong-ball id='primary-ball'
     @register={{action registerTypeApi 'ball'}} />
-  <pong-paddle id='opponent-paddle'
+  <pong-paddle id='opponent-paddle' @side='left'
     @register={{action registerTypeApi 'leftPaddle'}} />
-  <pong-paddle id='player-paddle'
+  <pong-paddle id='player-paddle' @side='right'
     @register={{action registerTypeApi 'rightPaddle'}} />
 </svg>

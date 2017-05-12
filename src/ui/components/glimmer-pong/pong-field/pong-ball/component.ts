@@ -81,7 +81,11 @@ export default class PongBall extends Component {
   }
 
   hitPaddle(paddle: PaddleApi) {
-    return intersectRect(this.bbox, paddle.bbox);
+    if (paddle.side === 'left') {
+      return intersectLeftRect(this.bbox, paddle.bbox);
+    } else {
+      return intersectRightRect(this.bbox, paddle.bbox);
+    }
   }
 
   calculateAngle() {
@@ -104,10 +108,16 @@ export default class PongBall extends Component {
   }
 };
 
-function intersectRect(r1, r2) {
+function intersectLeftRect(r1, r2) {
+  //CHECK IF THE TWO BOUNDING BOXES OVERLAP
+  return !(r2.right < r1.left || 
+           r2.top > r1.bottom ||
+           r2.bottom < r1.top);
+}
+
+function intersectRightRect(r1, r2) {
   //CHECK IF THE TWO BOUNDING BOXES OVERLAP
   return !(r2.left > r1.right || 
-           r2.right < r1.left || 
            r2.top > r1.bottom ||
            r2.bottom < r1.top);
 }

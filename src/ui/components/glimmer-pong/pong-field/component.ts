@@ -43,8 +43,8 @@ export default class PongField extends Component {
   }
 
   update(timestamp?) {
-    this.moveUser(this.leftPaddle);
-    this.moveUser(this.rightPaddle);
+    this.leftPaddle.attemptMovement();
+    this.rightPaddle.attemptMovement();
 
     let touchingSide = this.ballTouchingWall();
     let skipBallMove = false;
@@ -75,12 +75,7 @@ export default class PongField extends Component {
 
     switch(movement) {
       case 'up': {
-        if (position.y > 5) {
-          paddle.position = {
-            x: position.x,
-            y: position.y - 4
-          };
-        }
+        paddle.move(movement);
         break;
       }
 

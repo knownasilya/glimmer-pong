@@ -15,6 +15,7 @@ export default class PongPaddle extends Component {
       setup({ x, y }) {
         self.position = { x, y };
       },
+      attemptMovement: this.attemptMovement.bind(this),
       get bbox() {
         return self.bbox;
       },
@@ -39,7 +40,8 @@ export default class PongPaddle extends Component {
     }
   }
 
-  move(direction: Direction) {
+  attemptMovement() {
+    let direction = this.movement;
     let { x, y } = this.position;
 
     switch(direction) {

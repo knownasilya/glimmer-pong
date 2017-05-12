@@ -21,6 +21,5 @@ export interface PaddleApi {
   bbox: ClientRect;
   movement: Direction;
   position: Vector;
-  moveUp: Function;
-  moveDown: Function;
+  attemptMovement: Function;
 }

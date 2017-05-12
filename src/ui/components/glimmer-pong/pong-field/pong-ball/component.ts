@@ -93,9 +93,11 @@ export default class PongBall extends Component {
   }
 
   calculateVelocity(angle: number) {
+    let speed = 3;
+
     return {
-      x: Math.cos(angle) * 2,
-      y: Math.sin(angle) * 2
+      x: Math.cos(angle) * speed,
+      y: Math.sin(angle) * speed
     };
   }
 };

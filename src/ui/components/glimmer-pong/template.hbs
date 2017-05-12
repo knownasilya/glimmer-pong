@@ -1,3 +1,7 @@
 <div class='pong-arena'>
-  <pong-field />
+  {{#if playing}}
+    <pong-field />
+  {{else}}
+    <button type='button' onclick={{action play}}>Play</button>
+  {{/if}}
 </div>

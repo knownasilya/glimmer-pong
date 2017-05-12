@@ -1,4 +1,5 @@
 import Component, { tracked } from '@glimmer/component';
+import { PaddleApi } from '../../../../../utils/types';
 
 interface Vector {
   x: number;
@@ -13,7 +14,9 @@ export default class PongBall extends Component {
   defaultPosition: Vector;
   @tracked position: Vector = { x: 200, y: 200 };
 
-  didInsertElement() {
+  constructor() {
+    super(...arguments);
+
     let self = this;
 
     this.args.register({
@@ -23,6 +26,7 @@ export default class PongBall extends Component {
       get position() {
         return self.position;
       },
+      hitPaddle: this.hitPaddle.bind(this),
       changeVelocity: this.changeVelocity.bind(this),
       reset: this.reset.bind(this),
       move: this.move.bind(this),
@@ -74,6 +78,10 @@ export default class PongBall extends Component {
     this.timer = 5;
   }
 
+  hitPaddle(paddle: PaddleApi) {
+    return intersectRect(this.bbox, paddle.bbox);
+  }
+
   calculateAngle() {
     let numSections = 8;
     let sections = [3, 4, 7, 8, 9];
@@ -91,3 +99,11 @@ export default class PongBall extends Component {
     };
   }
 };
+
+function intersectRect(r1, r2) {
+  //CHECK IF THE TWO BOUNDING BOXES OVERLAP
+  return !(r2.left > r1.right || 
+           r2.right < r1.left || 
+           r2.top > r1.bottom ||
+           r2.bottom < r1.top);
+}

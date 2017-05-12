@@ -10,6 +10,7 @@ export interface BallApi {
   reset: Function;
   move: Function;
   changeVelocity: Function;
+  hitPaddle: Function;
   bbox: ClientRect;
   position: Vector;
 }

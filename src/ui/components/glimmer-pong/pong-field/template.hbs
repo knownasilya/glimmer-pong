@@ -4,9 +4,9 @@
   xmlns="http://www.w3.org/2000/svg">
   <pong-ball id='primary-ball'
     @register={{action registerTypeApi 'ball'}} />
-  <pong-paddle id='opponent-paddle' @position={{opponentPosition}}
+  <pong-paddle id='opponent-paddle'
     @register={{action registerTypeApi 'leftPaddle'}} />
-  <pong-paddle id='player-paddle' @position={{playerPosition}}
+  <pong-paddle id='player-paddle'
     @register={{action registerTypeApi 'rightPaddle'}} />
   <line stroke-dasharray='10, 5' x1='200' y1='0' x2='200' y2='400' stroke-width='2' stroke='slategrey' />
 </svg>

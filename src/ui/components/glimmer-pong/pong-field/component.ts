@@ -2,9 +2,6 @@ import Component, { tracked } from '@glimmer/component';
 import { Vector, Direction, BallApi, PaddleApi } from '../../../../utils/types';
 
 export default class PongField extends Component {
-  @tracked playerPosition: Vector = { x: 390, y: 192 };
-  @tracked opponentPosition: Vector = { x: 5, y: 192 };
-
   ball: BallApi;
   leftPaddle: PaddleApi;
   rightPaddle: PaddleApi;
@@ -15,21 +12,34 @@ export default class PongField extends Component {
     body.addEventListener('keydown', (e) => this.keyDown(e));
     body.addEventListener('keyup', (e) => this.keyUp(e));
 
-    this.ball.setup({
-      x: 200,
-      y: 200
-    });
-    this.leftPaddle.setup({
-      x: 5, y: 192
-    });
-    this.rightPaddle.setup({
-      x: 390, y: 192
-    });
     this.update();
   }
 
-  registerTypeApi(type: string, api: object) {
+  registerTypeApi(type: string, api: PaddleApi | BallApi) {
     this[type] = api;
+
+    switch(type) {
+      case 'ball': {
+        return api.setup({
+          x: 200,
+          y: 200
+        });
+      }
+
+      case 'leftPaddle': {
+        return api.setup({
+          x: 5,
+          y: 192
+        });
+      }
+
+      case 'rightPaddle': {
+        return api.setup({
+          x: 390,
+          y: 192
+        });
+      }
+    }
   }
 
   update(timestamp?) {
@@ -37,20 +47,22 @@ export default class PongField extends Component {
     this.moveUser(this.rightPaddle);
 
     let touchingSide = this.ballTouchingWall();
+    let skipBallMove = false;
 
     if (touchingSide === 'left' || touchingSide === 'right') {
       this.ball.reset();
+      skipBallMove = true;
     } else if (touchingSide === 'top' || touchingSide === 'bottom') {
       this.ball.changeVelocity({
         y: -1
       });
-      this.ball.move();
-    } else if (intersectRect(this.ball.bbox, this.leftPaddle.bbox) || intersectRect(this.ball.bbox, this.rightPaddle.bbox)) {
+    } else if (this.ball.hitPaddle(this.leftPaddle) || this.ball.hitPaddle(this.rightPaddle)) {
       this.ball.changeVelocity({
         x: -1
       });
-      this.ball.move();
-    } else {
+    }
+
+    if (!skipBallMove) {
       this.ball.move();
     }
 
@@ -148,12 +160,3 @@ export default class PongField extends Component {
     }
   }
 };
-
-
-function intersectRect(r1, r2) {
-  //CHECK IF THE TWO BOUNDING BOXES OVERLAP
-  return !(r2.left > r1.right || 
-           r2.right < r1.left || 
-           r2.top > r1.bottom ||
-           r2.bottom < r1.top);
-}

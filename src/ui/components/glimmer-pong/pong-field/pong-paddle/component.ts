@@ -6,7 +6,9 @@ export default class PongPaddle extends Component {
   element: HTMLElement;
   movement: Direction;
 
-  didInsertElement() {
+  constructor() {
+    super(...arguments);
+
     let self = this;
 
     this.args.register({

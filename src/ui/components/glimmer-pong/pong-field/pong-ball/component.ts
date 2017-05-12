@@ -55,11 +55,11 @@ export default class PongBall extends Component {
       return;
     }
 
-    let speed = this.velocity;
+    let velocity = this.velocity;
 
     this.position = {
-      x: this.position.x + speed.x,
-      y: this.position.y + speed.y
+      x: this.position.x + velocity.x,
+      y: this.position.y + velocity.y
     };
   }
 

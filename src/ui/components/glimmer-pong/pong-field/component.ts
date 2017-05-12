@@ -7,6 +7,7 @@ export default class PongField extends Component {
   rightPaddle: PaddleApi;
   @tracked rightScore: number = 0;
   @tracked leftScore: number = 0;
+  plopSound: HTMLAudioElement;
 
   args: {
     paused: boolean;
@@ -14,9 +15,12 @@ export default class PongField extends Component {
 
   didInsertElement() {
     let [body] = document.getElementsByTagName('body');
+    let plop = document.getElementById('plop');
 
     body.addEventListener('keydown', (e) => this.keyDown(e));
     body.addEventListener('keyup', (e) => this.keyUp(e));
+
+    this.plopSound = <HTMLAudioElement>plop;
 
     this.update();
   }
@@ -87,6 +91,7 @@ export default class PongField extends Component {
     let hitRightPaddle = this.ball.hitPaddle(this.rightPaddle);
 
     if (hitLeftPaddle || hitRightPaddle) {
+      this.plopSound.play();
       this.ball.changeVelocity({
         x: -1
       });

@@ -69,28 +69,7 @@ export default class PongField extends Component {
     window.requestAnimationFrame((timestamp) => this.update(timestamp));
   }
 
-  moveUser(paddle: PaddleApi) {
-    let movement = paddle.movement;
-    let position = paddle.position;
-
-    switch(movement) {
-      case 'up': {
-        paddle.move(movement);
-        break;
-      }
-
-      case 'down': {
-        if (position.y < 370) {
-          paddle.position = {
-            x: position.x,
-            y: position.y + 4
-          };
-        }
-        break;
-      }
-    }
-  }
-
+  // TODO: move to ball api
   ballTouchingWall() : Side {
     let { x, y } = this.ball.position;
     

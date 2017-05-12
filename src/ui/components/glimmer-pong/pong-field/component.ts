@@ -8,6 +8,10 @@ export default class PongField extends Component {
   @tracked rightScore: number = 0;
   @tracked leftScore: number = 0;
 
+  args: {
+    paused: boolean;
+  }
+
   didInsertElement() {
     let [body] = document.getElementsByTagName('body');
 
@@ -45,6 +49,10 @@ export default class PongField extends Component {
   }
 
   update(timestamp?) {
+    if (this.args.paused) {
+      return window.requestAnimationFrame((timestamp) => this.update(timestamp));
+    }
+
     this.leftPaddle.attemptMovement();
     this.rightPaddle.attemptMovement();
 

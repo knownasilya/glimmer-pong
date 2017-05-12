@@ -1,4 +1,5 @@
 export type Direction = 'up' | 'down' | '';
+export type Side = 'top' | 'bottom' | 'left' | 'right' | '';
 
 export interface Vector {
   x: number;

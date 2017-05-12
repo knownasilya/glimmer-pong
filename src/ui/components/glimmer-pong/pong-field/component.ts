@@ -1,5 +1,5 @@
 import Component, { tracked } from '@glimmer/component';
-import { Vector, Direction, BallApi, PaddleApi } from '../../../../utils/types';
+import { Vector, Side, Direction, BallApi, PaddleApi } from '../../../../utils/types';
 
 export default class PongField extends Component {
   ball: BallApi;
@@ -96,7 +96,7 @@ export default class PongField extends Component {
     }
   }
 
-  ballTouchingWall() {
+  ballTouchingWall() : Side {
     let { x, y } = this.ball.position;
     
     if (x < -6) {

@@ -6,10 +6,12 @@ interface Vector {
   y: number;
 }
 
+const timerDefault = 30;
+
 export default class PongBall extends Component {
   element: HTMLElement;
   angle: number;
-  timer: number = 5;
+  delayMovementTimer: number;
   velocity: Vector;
   defaultPosition: Vector;
   @tracked position: Vector = { x: 200, y: 200 };
@@ -48,8 +50,8 @@ export default class PongBall extends Component {
   }
 
   move() {
-    if (this.timer !== 0) {
-      this.timer -= 1;
+    if (this.delayMovementTimer !== 0) {
+      this.delayMovementTimer -= 1;
       return;
     }
 
@@ -75,7 +77,7 @@ export default class PongBall extends Component {
     };
     this.angle = this.calculateAngle();
     this.velocity = this.calculateVelocity(this.angle);
-    this.timer = 5;
+    this.delayMovementTimer = timerDefault;
   }
 
   hitPaddle(paddle: PaddleApi) {

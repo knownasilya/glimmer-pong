@@ -12,7 +12,7 @@ SVG based Pong game :video_game: :space_invader: :tennis:
 
 - [x] Collision detection
 - [x] Bouncing off paddles/walls
-- [ ] Scoring
+- [x] Scoring
 - [ ] UI
 - [ ] Sound
 - [ ] Multiplayer

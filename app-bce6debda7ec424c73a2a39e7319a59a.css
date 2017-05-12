@@ -1,0 +1,24 @@
+svg {
+  background: black; }
+
+#pong-menu {
+  display: flex;
+  margin: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  opacity: 0.65;
+  background-color: black; }
+
+#pong-menu button {
+  margin: auto;
+  border-radius: 0;
+  border: 0;
+  font-size: 1.2em; }
+
+.player-score {
+  font-family: 'Kelly Slab';
+  font-size: 1.5em;
+  line-height: 1em; }

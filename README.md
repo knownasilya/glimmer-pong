@@ -15,7 +15,7 @@ SVG based Pong game :video_game: :space_invader: :tennis:
 - [x] Scoring
 - [x] Sound
 - [x] Local Multiplayer
-- [ ] UI
+- [ ] UI (responsive)
 - [ ] AI
 - [ ] Online Multiplayer
 
